@@ -17,11 +17,17 @@ export default function Profile() {
     const history = useHistory();
 
     useEffect(() => {
-        api.get('profile', {
-            headers: {
-                Authorization: ongId
-            }
-        }).then(response => setIncidents(response.data))
+        async function loadIncidents() {
+            const response = await api.get('profile', {
+                headers: {
+                    Authorization: ongId
+                }
+            });
+
+            setIncidents(response.data);
+        }
+
+        loadIncidents();
     }, [ongId]);
 
     async function handleDeleteIncident(id) {
